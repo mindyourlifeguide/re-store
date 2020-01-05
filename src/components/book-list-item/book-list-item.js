@@ -1,7 +1,5 @@
 import React from 'react';
 import './book-list-item.css';
-import mapStateToProps from 'react-redux/lib/connect/mapStateToProps';
-import mapDispatchToProps from 'react-redux/lib/connect/mapDispatchToProps';
 
 const BookListItem = ({ book, onAddedToCart }) => {
 	const { title, author, price, coverImage } = book;
