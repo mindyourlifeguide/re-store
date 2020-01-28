@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import ShopHeader from '../shop-header';
 import { HomePage, CartPage } from '../pages';
 
-import './app.css';
-
 const App = ({ cartItems: items, orderTotal: total }) => (
 	<main role="main" className="container">
 		<ShopHeader

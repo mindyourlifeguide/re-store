@@ -9,16 +9,4 @@ const store = createStore(
 	composeWithDevTools(applyMiddleware(thunkMiddleware, logger)),
 );
 
-const delayedActionCreator = timeout => dispatch => {
-	setTimeout(
-		() =>
-			dispatch({
-				type: 'DELAYED_ACTION',
-			}),
-		timeout,
-	);
-};
-
-store.dispatch(delayedActionCreator(3000));
-
 export default store;
