@@ -1,5 +1,5 @@
 import React from 'react';
-import './error-indicator.css';
+import classes from './error-indicator.module.scss';
 
 const ErrorIndicator = () => {
 	function refreshPage() {
@@ -7,14 +7,16 @@ const ErrorIndicator = () => {
 	}
 	return (
 		<>
-			<div className="spinner">
-				<div className="spinner-circle spinner-circle-outer" />
+			<div className={classes.spinner}>
+				<div className={classes.spinnerCircleOuter} />
 
-				<div className="spinner-circle spinner-circle-single-1" />
-				<div className="spinner-circle spinner-circle-single-2" />
+				<div className={classes.spinnerCircleSingle1} />
+				<div className={classes.spinnerCircleSingle2} />
 			</div>
-			<div className="error-indicator">Oops ... Something went wrong</div>
-			<div className="error-indicator text" onClick={refreshPage}>
+			<div className={classes.errorIndicator}>
+				Oops ... Something went wrong
+			</div>
+			<div className={classes.text} onClick={refreshPage}>
 				Please reload your page
 			</div>
 		</>

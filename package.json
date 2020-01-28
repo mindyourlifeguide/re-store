@@ -48,6 +48,7 @@
     "eslint-plugin-react": "^7.17.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.14.2",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6"
