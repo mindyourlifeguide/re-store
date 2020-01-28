@@ -21,28 +21,43 @@ const updateCartItem = (book, item = {}, quantity) => {
 	};
 };
 
+const updateOrderTotal = cart =>
+	cart.reduce((acc, item) => acc + item.total, 0);
+
 const updateOrder = (state, bookId, quantity) => {
 	const {
 		bookList: { books },
 		shoppingCart: { cartItems },
 	} = state;
 
-	const book = books.find(({ id }) => id === bookId);
-
 	const itemIndex = cartItems.findIndex(({ id }) => id === bookId);
 	const item = cartItems[itemIndex];
+	const book = books.find(({ id }) => id === bookId);
 
-	const updatedItem = updateCartItem(book, item, quantity);
-	const updatedCartItems = updateCartItems(cartItems, updatedItem, itemIndex);
+	const newItem = updateCartItem(book, item, quantity);
+	const newCart = updateCartItems(cartItems, newItem, itemIndex);
+
+	localStorage.setItem('cart', JSON.stringify(newCart));
 
 	return {
-		cartItems: updatedCartItems,
-		orderTotal: updatedCartItems.reduce((acc, item) => acc + item.total, 0),
+		cartItems: newCart,
+		orderTotal: updateOrderTotal(newCart),
 	};
 };
 
 const updateShoppingCart = (state, action) => {
-	if (state === undefined) {
+	if (!state) {
+		const cartFromLocalStorage = localStorage.getItem('cart');
+
+		if (cartFromLocalStorage) {
+			const cart = JSON.parse(cartFromLocalStorage);
+
+			return {
+				cartItems: cart,
+				orderTotal: updateOrderTotal(cart),
+			};
+		}
+
 		return {
 			cartItems: [],
 			orderTotal: 0,
@@ -56,11 +71,17 @@ const updateShoppingCart = (state, action) => {
 		case 'BOOK_REMOVED_FROM_CART':
 			return updateOrder(state, action.payload, -1);
 
-		case 'ALL_BOOKS_REMOVED_FROM_CART':
-			const item = state.shoppingCart.cartItems.find(
-				({ id }) => id === action.payload,
+		case 'ALL_BOOKS_REMOVED_FROM_CART': {
+			const newCart = state.shoppingCart.cartItems.filter(
+				({ id }) => id !== action.payload,
 			);
-			return updateOrder(state, action.payload, -item.count);
+			localStorage.setItem('cart', JSON.stringify(newCart));
+
+			return {
+				orderTotal: updateOrderTotal(newCart),
+				cartItems: newCart,
+			};
+		}
 
 		default:
 			return state.shoppingCart;
