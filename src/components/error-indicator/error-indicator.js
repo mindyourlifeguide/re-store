@@ -79,8 +79,11 @@ const SpinnerRotateSingle2 = keyframes`
 		transform: rotateZ(-24deg);
 		}
 `;
-const Spinner = styled.div`
-	display: flex;
+const Spinner = styled('div')`
+	display: grid;
+	grid-area: Spinner;
+	justify-content: center;
+	text-align: center;
 	width: 55px;
 	height: 55px;
 	position: relative;

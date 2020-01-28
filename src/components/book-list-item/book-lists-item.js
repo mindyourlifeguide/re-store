@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const BookListItemStyle = styled('div')`
-	display: flex;
+	display: grid;
+	grid-area: BookListItem;
 	margin: 15px 0;
 	width: 350px;
 `;
