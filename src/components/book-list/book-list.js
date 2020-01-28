@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import BookListItem from '../book-list-item';
+
 import { withBookstoreService } from '../hoc';
-import { bookAddedToCart, fetchBooks } from '../../actions';
-import { compose } from '../../utils';
-import './book-list.css';
+import { fetchBooks, bookAddedToCart } from '../../actions';
+
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
-import { bindActionCreators } from 'redux';
+
+import './book-list.css';
 
 const BookList = ({ books, onAddedToCart }) => {
 	return (
@@ -33,12 +36,15 @@ class BookListContainer extends Component {
 
 	render() {
 		const { books, loading, error, onAddedToCart } = this.props;
+
 		if (loading) {
 			return <Spinner />;
 		}
+
 		if (error) {
 			return <ErrorIndicator />;
 		}
+
 		return <BookList books={books} onAddedToCart={onAddedToCart} />;
 	}
 }
